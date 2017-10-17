@@ -1,0 +1,17 @@
+[
+  {
+    "fullname": "First Demo",
+    "email": "first@demo.com",
+    "password": "demodemo"
+  },
+  {
+    "fullname": "Second Demo",
+    "email": "second@demo.com",
+    "password": "demodemo"
+  },
+  {
+    "fullname": "Third Demo",
+    "email": "third@demo.com",
+    "password": "demodemo"
+  }
+]

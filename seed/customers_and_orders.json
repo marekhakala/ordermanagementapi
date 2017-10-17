@@ -1,0 +1,189 @@
+[
+  {
+    "firstName": "Addie",
+    "lastName": "Davis",
+    "phone": "18883215689",
+    "email": "addie.davis@ymail.com",
+    "photo": "customer01.jpg",
+    "photoSeed": "7623fbeac815875ce453330244fee328.jpg",
+    "orders": [
+      {
+        "items": [
+          {
+            "productCode": "B00NBEWB4U",
+            "price": 14.99,
+            "priceWithVat": 18.14,
+            "quantity": 4
+          },
+          {
+            "productCode": "B01MSIEKXG",
+            "price": 594.99,
+            "priceWithVat": 719.94,
+            "quantity": 1
+          },
+          {
+            "productCode": "B00OTWQIZG",
+            "price": 499.12,
+            "priceWithVat": 603.95,
+            "quantity": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "firstName": "Alex",
+    "lastName": "Taylor",
+    "phone": "18886093160",
+    "email": "alex.taylor@ymail.com",
+    "photo": "customer02.jpg",
+    "photoSeed": "406bc59fa618aeff38ffd1e7f84b6075.jpg",
+    "orders": [
+      {
+        "items": [
+          {
+            "productCode": "B072JW8FCF",
+            "price": 2599.00,
+            "priceWithVat": 3144.79,
+            "quantity": 3
+          },
+          {
+            "productCode": "B017K17PQ8",
+            "price": 17.99,
+            "priceWithVat": 21.76,
+            "quantity": 1
+          },
+          {
+            "productCode": "B00NK332GS",
+            "price": 289.25,
+            "priceWithVat": 349.99,
+            "quantity": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "firstName": "Carmela",
+    "lastName": "Wilson",
+    "phone": "18883188706",
+    "email": "carmela.wilson@ymail.com",
+    "photo": "customer03.jpg",
+    "photoSeed": "1e9e8b940bc0d7cff2f5ff995b3f05b2.jpg",
+    "orders": [
+      {
+        "items": [
+          {
+            "productCode": "B00NK552GA",
+            "price": 99.99,
+            "priceWithVat": 120.98,
+            "quantity": 10
+          },
+          {
+            "productCode": "B00NK332GS",
+            "price": 289.99,
+            "priceWithVat": 349.99,
+            "quantity": 2
+          },
+          {
+            "productCode": "B072JW8FCF",
+            "price": 2599.00,
+            "priceWithVat": 3144.79,
+            "quantity": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "firstName": "Melisa",
+    "lastName": "White",
+    "phone": "18885432371",
+    "email": "melisa.white@ymail.com",
+    "photo": "customer03.jpg",
+    "photoSeed": "fbcab3fd8fff4345eefacc2474d79d78.jpg",
+    "orders": [
+      {
+        "items": []
+      }
+    ]
+  },
+  {
+    "firstName": "Rachel",
+    "lastName": "Scott",
+    "phone": "18884793209",
+    "email": "rachel.scott@ymail.com",
+    "photo": "customer02.jpg",
+    "photoSeed": "3acbdbc458e906f414e641dfb36a8281.jpg",
+    "orders": [
+      {
+        "items": []
+      }
+    ]
+  },
+  {
+    "firstName": "Agustin",
+    "lastName": "Reed",
+    "phone": "19996795672",
+    "email": "agustin.reed@mail.com",
+    "photo": "customer01.jpg",
+    "photoSeed": "915a3db308d4cdba18e31ed3ebc21e42.jpg",
+    "orders": [
+      {
+        "items": []
+      }
+    ]
+  },
+  {
+    "firstName": "Alan",
+    "lastName": "William",
+    "phone": "19993262346",
+    "email": "alan.william@mail.com",
+    "photo": "customer03.jpg",
+    "photoSeed": "60bc9f6f6a76db406f319634d82a2e2b.jpg",
+    "orders": [
+      {
+        "items": []
+      }
+    ]
+  },
+  {
+    "firstName": "Eldon",
+    "lastName": "Bailey",
+    "phone": "19997907893",
+    "email": "eldon.bailey@mail.com",
+    "photo": "customer01.jpg",
+    "photoSeed": "5a7af529d759fdb6c71c1eacde7ba7e3.jpg",
+    "orders": [
+      {
+        "items": []
+      }
+    ]
+  },
+  {
+    "firstName": "Jake",
+    "lastName": "Phillips",
+    "phone": "19999690237",
+    "email": "jake.phillips@mail.com",
+    "photo": "customer02.jpg",
+    "photoSeed": "226e378f1559e94ccdc30f89450aaf03.jpg",
+    "orders": [
+      {
+        "items": []
+      }
+    ]
+  },
+  {
+    "firstName": "Leo",
+    "lastName": "Dunn",
+    "phone": "19995474370",
+    "email": "leo.dunn@mail.com",
+    "photo": "customer03.jpg",
+    "photoSeed": "0050020766e2f73c872af6040b22145c.jpg",
+    "orders": [
+      {
+        "items": []
+      }
+    ]
+  }
+]
