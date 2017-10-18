@@ -18,10 +18,15 @@ const fs = require("fs-extra");
 const nodeEnv = process.env.NODE_ENV || "development";
 const appConfig = require("./config/env.json")[nodeEnv];
 const connection = require("./app/models/connection");
+const { Account } = require("./app/models/index").models;
 
 const seedPhotos = "./seed/photos/";
 const seedPhotoProducts = seedPhotos + "products/";
 const seedPhotoCustomers = seedPhotos + "customers/";
+
+const accounts = require("./seed/accounts.json");
+const products = require("./seed/products.json");
+const customers = require("./seed/customers_and_orders.json");
 
 const consoleOutput = (text, verbose) => {
   if(verbose) { console.log(text); }
@@ -34,6 +39,10 @@ const seed = (verbose = false) => {
   return connection.sync({ force: true })
     .then(() => fs.emptyDir(appConfig["photosPath"]["base"]))
     .then(() => { consoleOutput("[DB-seed] Start", verbose); })
+    .then(() => { consoleOutput("[DB-seed] Accounts : Start", verbose); })
+    .then(() => Account.truncate({ cascade: true }))
+    .then(() => Promise.all(accounts.map(account => Account.createAccount(account))))
+    .then(() => { consoleOutput("[DB-seed] Accounts : Done", verbose); })
     .then(() => { consoleOutput("[DB-seed] Done", verbose); })
     .catch((exception) => {
       console.log("[ERROR]: " + exception);

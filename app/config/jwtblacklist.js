@@ -14,9 +14,21 @@
   limitations under the License.
 */
 
-const connection = require("./connection");
-const Account = require("./account");
+import redis from "redis";
+import jwt from "express-jwt";
+import blacklist from "express-jwt-blacklist";
 
-const sync = () => connection.sync();
+const nodeEnv = process.env.NODE_ENV || "development";
+const appConfig = require("./../../config/env.json")[nodeEnv];
+const client = redis.createClient(appConfig["REDIS_PORT"], appConfig["REDIS_HOST"]);
 
-module.exports = { sync, models: { Account } }
+blacklist.configure({
+    tokenId: "jti", strick: true,
+    store: {
+      type: "redis", client,
+      keyPrefix: "ordermanagementapi:",
+      options: { timeout: 1000 }
+    }
+});
+
+module.exports = blacklist;

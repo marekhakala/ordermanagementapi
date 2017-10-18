@@ -22,6 +22,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import session from "express-session";
 import cors from "cors";
+import passport from "passport";
 import errorhandler from "errorhandler";
 
 const nodeEnv = process.env.NODE_ENV || "development";
@@ -39,6 +40,10 @@ app.use(require("method-override")());
 app.use(session({ secret: "ordermanagementapi", cookie: { maxAge: 60000 },
  resave: false, saveUninitialized: false }));
 if(!isProduction) { app.use(errorhandler()); }
+
+require("./app/models/account");
+require("./app/config/passport");
+app.use(require("./app/routes"));
 
 /// Error 404 Handler
 app.use((req, res, next) => {

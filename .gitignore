@@ -37,3 +37,6 @@ node_modules
 
 # Config directory
 config/env.json
+
+# tmp
+tmp
