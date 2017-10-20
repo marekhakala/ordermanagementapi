@@ -18,7 +18,7 @@ const fs = require("fs-extra");
 const nodeEnv = process.env.NODE_ENV || "development";
 const appConfig = require("./config/env.json")[nodeEnv];
 const connection = require("./app/models/connection");
-const { Account } = require("./app/models/index").models;
+const { Account, Product } = require("./app/models/index").models;
 
 const seedPhotos = "./seed/photos/";
 const seedPhotoProducts = seedPhotos + "products/";
@@ -43,6 +43,24 @@ const seed = (verbose = false) => {
     .then(() => Account.truncate({ cascade: true }))
     .then(() => Promise.all(accounts.map(account => Account.createAccount(account))))
     .then(() => { consoleOutput("[DB-seed] Accounts : Done", verbose); })
+    .then(() => { consoleOutput("[DB-seed] Products : Start", verbose); })
+    .then(() => Product.truncate({ cascade: true }))
+    .then(() => {
+      let promises = [];
+      for(let product of products) {
+        let source = seedPhotoProducts + product.photo;
+        let destination = appConfig["photosPath"]["base"] + appConfig["photosPath"]["products"] + product.photoSeed;
+        promises.push(fs.copy(seedPhotoProducts + product.photo,
+          appConfig["photosPath"]["base"] +
+          appConfig["photosPath"]["products"] + product.photoSeed));
+        promises.push(Product.seedProduct(product));
+
+        consoleOutput("[DB-seed] Products : " + product.name
+          + ", $" + product.price + " (" + product.priceWithVat + ")", verbose);
+      }
+      return Promise.all(promises);
+    })
+    .then(() => { consoleOutput("[DB-seed] Products : Done", verbose); })    
     .then(() => { consoleOutput("[DB-seed] Done", verbose); })
     .catch((exception) => {
       console.log("[ERROR]: " + exception);

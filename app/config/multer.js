@@ -13,11 +13,20 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+const crypto = require("crypto");
+const mime = require("mime-types");
 
-const connection = require("./connection");
-const Account = require("./account");
-const Product = require("./product");
+let OnFileFilter = (req, file, cb) => {
+  if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+    return cb(new Error("Only jpg, jpeg, and png files are allowed!"), false);
+  }
+  cb(null, true);
+}
 
-const sync = () => connection.sync();
+let OnFilename = (req, file, cb) => {
+  crypto.pseudoRandomBytes(16, function (err, raw) {
+    cb(null, raw.toString("hex") + "_" + Date.now() + "." + mime.extension(file.mimetype));
+  });
+};
 
-module.exports = { sync, models: { Account, Product } }
+module.exports = { OnFileFilter, OnFilename };

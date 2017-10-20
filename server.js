@@ -30,6 +30,9 @@ const isProduction = nodeEnv === "production";
 const isDevelopment = nodeEnv === "development";
 const appConfig = require("./config/env.json")[nodeEnv];
 
+const { Account } = require("./app/models/index").models;
+import auth from "./app/routes/auth";
+
 const app = express();
 app.use(cors());
 app.use(require("morgan")("dev"));

@@ -16,6 +16,7 @@
 
 const nodeEnv = process.env.NODE_ENV || "development";
 const connection = require("./app/models/connection");
+const { Account, Product } = require("./app/models/index").models;
 
 const setupDB = () => {
   console.log("Setup database");
@@ -23,6 +24,10 @@ const setupDB = () => {
 
   return connection.sync({ force: true })
     .then(() => { console.log("[DB-setup] Start"); })
+    .then(() => Account.truncate({ cascade: true }))
+    .then(() => { console.log("[DB-setup] Accounts: Done"); })
+    .then(() => Product.truncate({ cascade: true }))
+    .then(() => { console.log("[DB-setup] Products: Done"); })
     .then(() => { console.log("[DB-setup] Done"); })
     .catch((exception) => {
       console.log("[ERROR]: " + exception);
