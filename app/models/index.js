@@ -17,7 +17,13 @@
 const connection = require("./connection");
 const Account = require("./account");
 const Product = require("./product");
+const Customer = require("./customer");
+const Order = require("./order");
+const OrderItem = require("./orderitem");
 
+Customer.hasMany(Order, { as: "orders", onDelete: "CASCADE" });
+Order.hasMany(OrderItem, { as: "items", onDelete: "CASCADE" });
+OrderItem.belongsTo(Product, { as: "product" });
 const sync = () => connection.sync();
 
-module.exports = { sync, models: { Account, Product } }
+module.exports = { sync, models: { Account, Product, Customer, Order, OrderItem } }
