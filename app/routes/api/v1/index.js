@@ -19,6 +19,7 @@ const router = express.Router();
 
 router.use("/", require("./accounts"));
 router.use("/products", require("./products"));
+router.use("/customers", require("./customers"));
 
 router.use((err, req, res, next) => {
   if(err.name === "ValidationError") {
