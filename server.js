@@ -24,6 +24,8 @@ import session from "express-session";
 import cors from "cors";
 import passport from "passport";
 import errorhandler from "errorhandler";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 const nodeEnv = process.env.NODE_ENV || "development";
 const isProduction = nodeEnv === "production";
@@ -40,15 +42,37 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(require("method-override")());
-app.use(session({ secret: "ordermanagementapi", cookie: { maxAge: 60000 },
+app.use(session({ secret: "addressbookapi", cookie: { maxAge: 60000 },
  resave: false, saveUninitialized: false }));
 if(!isProduction) { app.use(errorhandler()); }
 
+// Data models
 require("./app/models/account");
 require("./app/config/passport");
 app.use(require("./app/routes"));
 
-/// Error 404 Handler
+// Swagger / Swagger UI
+const docsPath = "/api-docs";
+const docsJsonPath = docsPath + ".json";
+const swaggerOptions = require("./app/config/swagger");
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+const swaggerUiHandler = swaggerUi.setup(swaggerSpec);
+
+app.get(docsJsonPath, (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.send(swaggerSpec);
+});
+
+app.use(docsPath, swaggerUi.serve, (req, res, next) => {
+  if (!req.query.url) {
+    let protocol = (req.protocol === "https") ? "https" : "http";
+    res.redirect(`${docsPath}?url=${protocol}://${req.headers.host}${docsJsonPath}`);
+  } else {
+    swaggerUiHandler(req, res, next);
+  }
+});
+
+/// Error HTTP 404 Handler
 app.use((req, res, next) => {
   res.status(404).json({ status: 404,
     message: "Not found", statusMessage: "error",

@@ -20,7 +20,98 @@ const blacklist = require("./../../../config/jwtblacklist");
 const { Account } = require("./../../../models/index").models;
 import auth from "../../auth";
 
-router.post("/accounts", (req, res, next) => {
+/**
+ * @swagger
+ * definitions:
+ *  Account:
+ *    type: object
+ *    properties:
+ *      id:
+ *        type: integer
+ *        description: Account ID
+ *      fullname:
+ *        type: string
+ *        description: First and last name
+ *      email:
+ *        type: string
+ *        description: Email address
+ *  AccountAuth:
+ *    type: object
+ *    properties:
+ *      id:
+ *        type: integer
+ *        description: Account ID
+ *      fullname:
+ *        type: string
+ *        description: First and last name
+ *      email:
+ *        type: string
+ *        description: Email address
+ *      token:
+ *        type: string
+ *        description: JWT auth token
+ *  ErrorMessage:
+ *    type: object
+ *    properties:
+ *      status:
+ *        type: string
+ *        description: Error type
+ *      errors:
+ *        $ref: "#/definitions/ErrorMessages"
+ *  ErrorMessages:
+ *    additionalProperties:
+ *      type: string
+ */
+
+ /**
+  * @swagger
+  * /v1/accounts:
+  *  post:
+  *    tags:
+  *      - Accounts
+  *    description: Sign Up
+  *    produces:
+  *      - application/json
+  *    parameters:
+  *      - name: account[fullname]
+  *        description: First and last name
+  *        in: body
+  *        type: string
+  *      - name: account[email]
+  *        description: Email address
+  *        in: body
+  *        type: string
+  *        required: true
+  *      - name: account[password]
+  *        description: Password
+  *        in: body
+  *        type: string
+  *        required: true
+  *    responses:
+  *      201:
+  *        description: Account
+  *        schema:
+  *          type: object
+  *          properties:
+  *            status:
+  *              type: integer
+  *              description: HTTP status code
+  *            message:
+  *              type: string
+  *              description: Content description
+  *            statusMessage:
+  *              type: string
+  *              description: HTTP status text
+  *            account:
+  *              type: object
+  *              $ref: "#/definitions/AccountAuth"
+  *      422:
+  *        description: Unprocessable Entity
+  *        schema:
+  *          type: object
+  *          $ref: "#/definitions/ErrorMessage"
+  */
+ router.post("/accounts", (req, res, next) => {
    let errorsCount = 0;
    let errorsHash = {};
    let errorMessage = "Can't be blank.";
@@ -87,7 +178,39 @@ router.post("/accounts", (req, res, next) => {
    });
  });
 
-router.post("/accounts/signin", (req, res, next) => {
+ /**
+  * @swagger
+  * /v1/accounts/signin:
+  *  post:
+  *    tags:
+  *      - Accounts
+  *    description: Sign In
+  *    produces:
+  *      - application/json
+  *    parameters:
+  *      - name: account[email]
+  *        description: Email address
+  *        in: body
+  *        type: string
+  *        required: true
+  *      - name: account[password]
+  *        description: Password
+  *        in: body
+  *        type: string
+  *        required: true
+  *    responses:
+  *      200:
+  *        description: Account
+  *        schema:
+  *          type: object
+  *          $ref: "#/definitions/AccountAuth"
+  *      422:
+  *        description: Unprocessable Entity
+  *        schema:
+  *          type: object
+  *          $ref: "#/definitions/ErrorMessage"
+  */
+ router.post("/accounts/signin", (req, res, next) => {
    var errorsCount = 0;
    var errorsHash = {};
    var errorMessage = "Can't be blank.";
@@ -129,6 +252,29 @@ router.post("/accounts/signin", (req, res, next) => {
    })(req, res, next);
  });
 
+/**
+ * @swagger
+ * /v1/account:
+ *  get:
+ *    tags:
+ *      - Accounts
+ *    description: Get an account information
+ *    security:
+ *      - Jwt: []
+ *    produces:
+ *      - application/json
+ *    responses:
+ *      200:
+ *        description: Account
+ *        schema:
+ *          type: object
+ *          $ref: "#/definitions/AccountAuth"
+ *      401:
+ *        description: Unauthorized
+ *        schema:
+ *          type: object
+ *          $ref: "#/definitions/ErrorMessage"
+ */
 router.get("/account", auth.required, (req, res, next) => {
   Account.validateAccount(req.payload).then((account) => {
     if(account == null) {
@@ -142,6 +288,60 @@ router.get("/account", auth.required, (req, res, next) => {
   }).catch(next);
 });
 
+/**
+ * @swagger
+ * /v1/account:
+ *  put:
+ *    tags:
+ *      - Accounts
+ *    description: Update an account information
+ *    security:
+ *      - Jwt: []
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - name: account[currentPassword]
+ *        description: Current password
+ *        in: body
+ *        type: string
+ *        required: true
+ *      - name: account[fullname]
+ *        description: First and last name
+ *        in: body
+ *        type: string
+ *      - name: account[password]
+ *        description: New password
+ *        in: body
+ *        type: string
+ *    responses:
+ *      200:
+ *        description: Account
+ *        schema:
+ *          type: object
+ *          properties:
+ *            status:
+ *              type: integer
+ *              description: HTTP status code
+ *            message:
+ *              type: string
+ *              description: Content description
+ *            statusMessage:
+ *              type: string
+ *              description: HTTP status text
+ *            account:
+ *              description: Account information
+ *              $ref: "#/definitions/Account"
+ *      401:
+ *        description: Unauthorized
+ *        schema:
+ *          type: object
+ *          $ref: "#/definitions/ErrorMessage"
+ *      422:
+ *        description: Unprocessable Entity
+ *        schema:
+ *          type: object
+ *          $ref: "#/definitions/ErrorMessage"
+ */
 router.put("/account", auth.required, (req, res, next) => {
   Account.validateAccount(req.payload).then((account) => {
     if(account == null) {
@@ -196,6 +396,26 @@ router.put("/account", auth.required, (req, res, next) => {
   }).catch(next);
 });
 
+/**
+ * @swagger
+ * /v1/accounts/signout:
+ *  delete:
+ *    tags:
+ *      - Accounts
+ *    description: Sign Out
+ *    produces:
+ *      - application/json
+ *    security:
+ *      - Jwt: []
+ *    responses:
+ *      204:
+ *        description: Sign Out
+ *      401:
+ *        description: Unauthorized
+ *        schema:
+ *          type: object
+ *          $ref: "#/definitions/ErrorMessage"
+ */
 router.delete("/accounts/signout", auth.required, (req, res, next) => {
   Account.validateAccount(req.payload).then((account) => {
     if(account == null) {
