@@ -23,8 +23,8 @@ The Order Management API is an application that provides an implementation of a 
 * Create a database `createdb oma`
 * Create a database for testing `createdb oma_test` (Optional)
 * Create a database for development `createdb oma_development` (Optional)
-* Setup a config file `cp ./config/env.json.sample ./config/env.json && vim ./config/env.json`
-* Setup and seed a database tables `yarn run seed`
+* Setup config file `cp ./config/env.json.sample ./config/env.json && vim ./config/env.json`
+* Setup and seed database tables `yarn run seed`
 
 ## Run application - development
 
